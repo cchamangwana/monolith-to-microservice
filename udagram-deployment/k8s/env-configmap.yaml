@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  AWS_BUCKET: monolith-to-services-7360423
+  AWS_PROFILE: default
+  AWS_REGION: eu-west-2
+  JWT_SECRET: meow
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: monolith-to-micro.cutgyxsfmk8f.eu-west-2.rds.amazonaws.com
+  URL: http://af1e24cc65c644abf8f0507d82b8a5e5-2076379747.eu-west-2.elb.amazonaws.com:8100
+metadata:
+  name: env-config

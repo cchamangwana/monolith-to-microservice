@@ -1,0 +1,18 @@
+version: "3"
+services:
+  reverse-proxy:
+    build:
+      context: reverse-proxy
+    image: chamangwana/reverse-proxy
+  udagram-backend-user:
+    build:
+      context: ../udagram-backend-user
+    image: chamangwana/udagram-backend-user
+  udagram-backend-feed:
+    build:
+      context: ../udagram-backend-feed
+    image: chamangwana/udagram-backend-feed
+  udagram-frontend:
+    build:
+      context: ../udagram-frontend
+    image: chamangwana/udagram-frontend

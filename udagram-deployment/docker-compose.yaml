@@ -1,0 +1,40 @@
+version: "3"
+services:
+  reverse-proxy:
+      image: chamangwana/reverse-proxy
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - udagram-backend-user
+        - udagram-backend-feed
+  udagram-backend-user:
+    image: chamangwana/udagram-backend-user
+    environment:
+      POSTGRES_USERNAME: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_HOST: $POSTGRES_HOST
+      AWS_REGION: $AWS_REGION
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_BUCKET: $AWS_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  udagram-backend-feed:
+    image: chamangwana/udagram-backend-feed
+    volumes:
+      - $HOME/.aws:/root/.aws
+    environment:
+      POSTGRES_USERNAME: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_HOST: $POSTGRES_HOST
+      AWS_REGION: $AWS_REGION
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_BUCKET: $AWS_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  udagram-frontend:
+    image: chamangwana/udagram-frontend
+    ports:
+      - "8100:80"
