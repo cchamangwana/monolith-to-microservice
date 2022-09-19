@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-frontend
+spec:
+  selector:
+    matchLabels:
+      run: udagram-frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: udagram-frontend
+    spec:
+      containers:
+      - name: udagram-frontend
+        image: chamangwana/udagram-frontend
+        ports: 
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: udagram-frontend
+  labels:
+    run: udagram-frontend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: udagram-frontend
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: udagram-frontend
+  name: udagram-frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: udagram-frontend
+        api: external
+    spec:
+      containers:
+        - image: chamangwana/udagram-frontend
+          name: udagram-frontend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+      restartPolicy: Always
