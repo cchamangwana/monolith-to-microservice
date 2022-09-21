@@ -5,7 +5,7 @@ metadata:
     service: udagram-backend-feed
   name: udagram-backend-feed
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -18,10 +18,10 @@ spec:
           resources:
             requests:
               memory: "128Mi"
-              cpu: "250m"
+              cpu: "500m"
             limits:
               memory: "2048Mi"
-              cpu: "500m"
+              cpu: "1000m"
           env:
             - name: URL
               valueFrom:
@@ -70,7 +70,7 @@ spec:
                   key: AWS_BUCKET
       restartPolicy: Always
 
-
+---
 apiVersion: v1
 kind: Service
 metadata:
